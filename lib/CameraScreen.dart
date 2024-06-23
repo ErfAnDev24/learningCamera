@@ -72,6 +72,7 @@ class CameraScreen extends StatelessWidget {
                                           );
                                         },
                                         onLongPress: () async {
+                                          print('ErfAn check PRESSSSSSSSSSS');
                                           // final erfan = join(
                                           //     (await getTemporaryDirectory())
                                           //         .path,
@@ -80,6 +81,8 @@ class CameraScreen extends StatelessWidget {
                                               ?.startVideoRecording();
                                         },
                                         onLongPressUp: () async {
+                                          print(
+                                              'ErfAn check UPPPPPPPPPPPPPPPPPPPPPPPPP');
                                           final file = await state
                                               .camercontroller
                                               ?.stopVideoRecording();
@@ -130,6 +133,27 @@ class CameraScreen extends StatelessWidget {
                                           height: 70,
                                           decoration: const BoxDecoration(
                                               color: Colors.pink,
+                                              shape: BoxShape.circle),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          var camercontroller =
+                                              await state.camercontroller;
+                                          context.read<CameraBloc>().add(
+                                              EnableFlashEvent(
+                                                  cameraController:
+                                                      camercontroller!));
+                                        },
+                                        child: Container(
+                                          width: 70,
+                                          height: 70,
+                                          decoration: const BoxDecoration(
+                                              color: Colors.blue,
                                               shape: BoxShape.circle),
                                         ),
                                       ),

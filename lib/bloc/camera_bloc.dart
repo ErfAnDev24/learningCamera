@@ -20,10 +20,10 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
       }
 
       var backCamera = cameras.firstWhere(
-          (element) => element.lensDirection == CameraLensDirection.front);
+          (element) => element.lensDirection == CameraLensDirection.back);
 
       CameraController controller = CameraController(
-          backCamera, ResolutionPreset.medium,
+          backCamera, ResolutionPreset.high,
           enableAudio: true);
 
       await controller.initialize();
@@ -63,6 +63,30 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
       await cameraController.initialize();
 
       print('ErfAn check ${cameraController.description.lensDirection}');
+      emit(PrepareCamaraState(cameraController));
+    });
+
+    on<EnableFlashEvent>((event, emit) async {
+      List<CameraDescription> cameras = [];
+      try {
+        cameras = await availableCameras();
+      } catch (e) {
+        print(e);
+      }
+
+      var cameraController = event.cameraController;
+      if (cameraController.value.flashMode == FlashMode.auto) {
+        cameraController.setFlashMode(FlashMode.always);
+      }
+      if (cameraController.value.flashMode == FlashMode.off) {
+        cameraController.setFlashMode(FlashMode.always);
+      } else if (cameraController.value.flashMode == FlashMode.always) {
+        cameraController.setFlashMode(FlashMode.off);
+      }
+
+      await cameraController.initialize();
+
+      print('ErfAn check ${cameraController.value.flashMode}');
       emit(PrepareCamaraState(cameraController));
     });
   }

@@ -56,6 +56,26 @@ class VideoPreviewScreen extends StatelessWidget {
                           )
                         : Container(),
                   ),
+                  Container(
+                    width: 300,
+                    height: 30, // افزایش ارتفاع برای در نظر گرفتن پدینگ
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: VideoProgressIndicator(
+                          state.controller,
+                          allowScrubbing: true,
+                          colors: const VideoProgressColors(
+                            backgroundColor: Colors.blueGrey,
+                            playedColor: Colors.pink,
+                            bufferedColor: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     height: 40,
                   ),
